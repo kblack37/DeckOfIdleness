@@ -6,7 +6,7 @@
 	<meta title="DeckOfIdleness" package="DeckOfIdleness" version="1.0.0" company="kristen autumn blackburn" />
 	
 	<!-- output -->
-	<app main="Main" file="DeckOfIdleness" path="bin" />
+	<app main="idle.engine.GameEngine" file="DeckOfIdleness" path="bin" />
 	
 	<window background="#000000" fps="60" />
 	<window width="800" height="480" unless="mobile" />
@@ -19,7 +19,7 @@
 	
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
-	<assets path="assets/img" rename="img" />
+	<assets path="assets" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->

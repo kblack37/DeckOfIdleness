@@ -1,0 +1,38 @@
+{"cards":
+	[{
+		"id": 0,
+		"name": "Relax",
+		"color": "grey",
+		"img": "img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "energy",
+				"a": 3
+			}]
+	},
+	{
+		"id": 1,
+		"name": "Lift",
+		"color": "red",
+		"img": "img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "energy",
+				"a": 3
+			}]
+	},
+	{
+		"id": 2,
+		"name": "Barter",
+		"color": "yellow",
+		"img": "img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "energy",
+				"a": 3
+			}]
+	}]
+}
