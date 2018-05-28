@@ -1,0 +1,17 @@
+{"resources":
+	[{
+		"name": "energy"
+	},
+	{
+		"name": "power"
+	},
+	{
+		"name": "coins"
+	},
+	{
+		"name": "secrets"
+	},
+	{
+		"name": "genes"
+	}]
+}

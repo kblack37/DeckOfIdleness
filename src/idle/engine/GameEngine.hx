@@ -2,12 +2,18 @@ package idle.engine;
 
 import common.engine.component.ComponentManager;
 import common.engine.component.IComponentManager;
+import common.engine.component.MoveComponent;
 import common.engine.component.RenderableComponent;
+import common.engine.component.RotateComponent;
+import common.engine.component.ScaleComponent;
+import common.engine.component.TransformComponent;
 import common.engine.widget.BaseWidget;
 import common.state.StateMachine;
 import haxe.Json;
+import idle.engine.card.ICardLibrary;
 import idle.state.DeckIdleGameState;
 import openfl.Assets;
+import openfl.display.DisplayObject;
 import openfl.events.Event;
 
 import common.engine.IGameEngine;
@@ -23,6 +29,8 @@ class GameEngine extends Sprite implements IGameEngine {
 	
 	private var m_idToCardMap : Map<Int, Dynamic>;
 	
+	private var m_cardLibraries : Map<String, ICardLibrary>;
+	
 	private var m_stateMachine : IStateMachine;
 	
 	private var m_time : Time;
@@ -35,6 +43,7 @@ class GameEngine extends Sprite implements IGameEngine {
 		super();
 		
 		loadDefaultCardLibrary();
+		m_cardLibraries = new Map<String, ICardLibrary>();
 		
 		m_stateMachine = new StateMachine();
 		m_stateMachine.registerState(new DeckIdleGameState(this));
@@ -49,6 +58,14 @@ class GameEngine extends Sprite implements IGameEngine {
 	
 	public function getIdToCardMap() : Map<Int, Dynamic> {
 		return m_idToCardMap;
+	}
+	
+	public function addCardLibrary(libraryName : String, library : ICardLibrary) {
+		m_cardLibraries.set(libraryName, library);
+	}
+	
+	public function getCardLibrary(libraryName : String) : ICardLibrary {
+		return m_cardLibraries.get(libraryName);
 	}
 	
 	private function loadDefaultCardLibrary() {
@@ -90,6 +107,20 @@ class GameEngine extends Sprite implements IGameEngine {
 		m_time.update();
 		
 		m_stateMachine.getCurrentState().update();
+	}
+	
+	public function addUIComponent(entityId : String, display : DisplayObject) {
+		// Add the new transform component and update its default values to those of the
+		// existing display object
+		var transformComponent : TransformComponent = 
+			try cast(m_componentManager.addComponentToEntity(entityId, TransformComponent.TYPE_ID), TransformComponent) catch (e : Dynamic) null;
+		transformComponent.move.queueMove({x: display.x, y: display.y});
+		transformComponent.rotate.queueRotation({rotation: display.rotation});
+		transformComponent.scale.queueScale({scaleX: display.scaleX, scaleY: display.scaleY});
+		
+		var renderableComponent : RenderableComponent =
+			try cast(m_componentManager.addComponentToEntity(entityId, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;
+		renderableComponent.view = display;
 	}
 	
 	public function addWidget(entityId : String, widget : BaseWidget) {

@@ -9,7 +9,7 @@ import openfl.events.Event;
  */
 class BaseEvent extends Event {
 	
-	public var data;
+	public var data : Dynamic;
 
 	public function new(type : String, data : Dynamic = null) {
 		super(type, false, false);

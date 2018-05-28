@@ -3,7 +3,7 @@
 		"id": 0,
 		"name": "Relax",
 		"color": "grey",
-		"img": "img/ph.png",
+		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
@@ -15,7 +15,7 @@
 		"id": 1,
 		"name": "Lift",
 		"color": "red",
-		"img": "img/ph.png",
+		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
@@ -27,12 +27,84 @@
 		"id": 2,
 		"name": "Barter",
 		"color": "yellow",
-		"img": "img/ph.png",
+		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "energy",
 				"a": 3
+			}]
+	},
+	{
+		"id": 3,
+		"name": "Read",
+		"color": "blue",
+		"img": "assets/img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "energy",
+				"a": 3
+			}]
+	},
+	{
+		"id": 4,
+		"name": "Adapt",
+		"color": "green",
+		"img": "assets/img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "energy",
+				"a": 3
+			}]
+	},
+	{
+		"id": 5,
+		"name": "Lead",
+		"color": "red",
+		"img": "assets/img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "power",
+				"a": 1
+			}]
+	},
+	{
+		"id": 6,
+		"name": "Sell",
+		"color": "yellow",
+		"img": "assets/img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "coins",
+				"a": 1
+			}]
+	},
+	{
+		"id": 7,
+		"name": "Study",
+		"color": "blue",
+		"img": "assets/img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "secrets",
+				"a": 1
+			}]
+	},
+	{
+		"id": 8,
+		"name": "Mutate",
+		"color": "green",
+		"img": "assets/img/ph.png",
+		"effects":
+			[{
+				"type": "resource",
+				"r": "genes",
+				"a": 1
 			}]
 	}]
 }

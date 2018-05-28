@@ -6,10 +6,10 @@
 	<meta title="DeckOfIdleness" package="DeckOfIdleness" version="1.0.0" company="kristen autumn blackburn" />
 	
 	<!-- output -->
-	<app main="idle.engine.GameEngine" file="DeckOfIdleness" path="bin" />
+	<app main="TestMain" file="DeckOfIdleness" path="bin" />
 	
 	<window background="#000000" fps="60" />
-	<window width="800" height="480" unless="mobile" />
+	<window width="1024" height="768" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
 	<!-- classpath, haxe libs -->

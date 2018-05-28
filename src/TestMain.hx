@@ -2,6 +2,8 @@ package;
 
 import common.engine.IGameEngine;
 import idle.engine.GameEngine;
+import motion.Actuate;
+import motion.easing.Linear;
 import openfl.display.Sprite;
 import openfl.events.Event;
 

@@ -1,4 +1,4 @@
-package idle.engine.system;
+package idle.systems;
 
 import common.engine.IGameEngine;
 import common.engine.scripting.ScriptStatus;
@@ -19,7 +19,11 @@ class CardEffectSystem extends BaseSystem {
 	}
 	
 	override public function visit() : ScriptStatus {
-		return m_children.shift().visit();
+		var status : ScriptStatus = ScriptStatus.FAIL;
+		if (m_children.length > 0) {
+			status = m_children.shift().visit();
+		}
+		return status;
 	}
 	
 	override public function dispose() {

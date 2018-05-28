@@ -10,14 +10,14 @@ import idle.engine.card.effects.ResourceEffect;
  */
 class Card implements ISerializable {
 	
-	public var uid(get, never) : Int;
+	public var uid(get, never) : String;
 	public var name(get, never) : String;
 	public var color(get, never) : String;
 	public var imgFile(get, never) : String;
 	
 	private static var g_nextUid : Int = 0;
 	
-	private var m_uid : Int;
+	private var m_uid : String;
 	
 	private var m_name : String;
 	private var m_color : String;
@@ -25,7 +25,7 @@ class Card implements ISerializable {
 	private var m_effects : Array<CardEffect>;
 	
 	public function new() {
-		m_uid = g_nextUid++;
+		m_uid = Std.string(g_nextUid++);
 		
 		m_effects = new Array<CardEffect>();
 	}
@@ -50,7 +50,7 @@ class Card implements ISerializable {
 		m_imgFile = object.img;
 	}
 	
-	function get_uid() : Int {
+	function get_uid() : String {
 		return m_uid;
 	}
 	

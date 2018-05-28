@@ -8,6 +8,7 @@ import common.engine.component.RenderableComponent;
 import common.engine.component.RotateComponent;
 import common.engine.component.ScaleComponent;
 import common.engine.component.TransformComponent;
+import common.engine.scripting.ScriptStatus;
 import common.math.MathUtil;
 import motion.Actuate;
 
@@ -21,7 +22,7 @@ class FreeTransformSystem extends BaseSystem {
 		super(gameEngine, id, isActive);
 	}
 	
-	override public function visit() : Int {
+	override public function visit() : ScriptStatus {
 		var componentManager : IComponentManager = m_gameEngine.getComponentManager();
 		var renderableComponent : RenderableComponent = null;
 		
@@ -43,10 +44,10 @@ class FreeTransformSystem extends BaseSystem {
 						renderableComponent.view.x = moveComponent.x;
 						renderableComponent.view.y = moveComponent.y;
 					} else {
+						moveComponent.isMoving = true;
 						var distanceToMove : Float = MathUtil.distance(renderableComponent.view.x, renderableComponent.view.y, moveComponent.x, moveComponent.y);
 						var timeToMove : Float = distanceToMove / moveComponent.velocity;
 						Actuate.tween(renderableComponent.view, timeToMove, { x: moveComponent.x, y: moveComponent.y }).onComplete(onMoveComplete, [moveComponent]);
-						moveComponent.isMoving = true;
 					}
 				}
 				
@@ -58,9 +59,9 @@ class FreeTransformSystem extends BaseSystem {
 					if (rotateComponent.angularVelocity <= 0) {
 						renderableComponent.view.rotation = rotateComponent.rotation;
 					} else {
+						rotateComponent.isRotating = true;
 						var timeToRotate : Float = Math.abs(renderableComponent.view.rotation - rotateComponent.rotation) / rotateComponent.angularVelocity;
 						Actuate.tween(renderableComponent.view, timeToRotate, { rotation: rotateComponent.rotation }).smartRotation().onComplete(onRotateComplete, [rotateComponent]);
-						rotateComponent.isRotating = true;
 					}
 				}
 				
@@ -73,6 +74,7 @@ class FreeTransformSystem extends BaseSystem {
 						renderableComponent.view.scaleX = scaleComponent.scaleX;
 						renderableComponent.view.scaleY = scaleComponent.scaleY;
 					} else {
+						scaleComponent.isScaling = true;
 						// Do x and y scaling with separate actuators so the longer one defines when the scale is complete
 						var timeToScaleX : Float = Math.abs(renderableComponent.view.scaleX - scaleComponent.scaleX) / scaleComponent.scaleVelocity;
 						var timeToScaleY : Float = Math.abs(renderableComponent.view.scaleY - scaleComponent.scaleY) / scaleComponent.scaleVelocity;
@@ -84,8 +86,6 @@ class FreeTransformSystem extends BaseSystem {
 						} else {
 							scaleYActuator.onComplete(onScaleComplete, [scaleComponent]);
 						}
-						
-						scaleComponent.isScaling = true;
 					}
 				}
 			}

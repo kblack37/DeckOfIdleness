@@ -18,4 +18,9 @@ abstract Number(Float) from Float to Float {
 	public function toInt() : Int {
 		return Math.round(this);
 	}
+	
+	@:op(A > B)
+	public function gr(rhs : Float) : Bool {
+		return this > rhs;
+	}
 }

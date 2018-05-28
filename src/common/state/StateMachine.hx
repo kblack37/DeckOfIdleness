@@ -44,7 +44,7 @@ class StateMachine extends Sprite implements IStateMachine {
 	
 	public function changeState(stateClass : Class<Dynamic>) : Void {
 		var state : IState = getStateInstance(stateClass);
-		var exitParams : Dynamic = null;
+		var exitParams : Dynamic = {};
 		if (m_currentState != null) {
 			removeChild(m_currentState.getSprite());
 			exitParams = m_currentState.exit(state);

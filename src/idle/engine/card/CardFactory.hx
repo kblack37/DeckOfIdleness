@@ -37,7 +37,7 @@ class CardFactory {
 		var cardEffect : CardEffect = null;
 		var type : String = effectData.type;
 		if (type == "resource") {
-			cardEffect = new ResourceEffect(m_gameEngine, effectData.resource, effectData.amount);
+			cardEffect = new ResourceEffect(m_gameEngine, effectData.r, effectData.a);
 		}
 		return cardEffect;
 	}
