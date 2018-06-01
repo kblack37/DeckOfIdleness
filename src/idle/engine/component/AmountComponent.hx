@@ -1,7 +1,7 @@
 package idle.engine.component;
 
 import common.engine.component.BaseComponent;
-import idle.engine.type.Number;
+import common.engine.type.Number;
 
 /**
  * ...

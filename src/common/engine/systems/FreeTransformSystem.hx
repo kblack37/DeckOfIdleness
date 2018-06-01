@@ -9,7 +9,7 @@ import common.engine.component.RotateComponent;
 import common.engine.component.ScaleComponent;
 import common.engine.component.TransformComponent;
 import common.engine.scripting.ScriptStatus;
-import common.math.MathUtil;
+import common.util.MathUtil;
 import motion.Actuate;
 
 /**

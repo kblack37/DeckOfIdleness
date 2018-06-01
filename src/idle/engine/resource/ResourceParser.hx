@@ -24,6 +24,7 @@ class ResourceParser {
 				var resourceName : String = resource.name;
 				
 				componentManager.addComponentToEntity(resourceName, AmountComponent.TYPE_ID).deserialize(resource);
+				m_gameEngine.addTagToEntity(resourceName, "resource");
 			}
 		} else {
 			trace("No resources parsed!");

@@ -1,4 +1,4 @@
-package idle.engine.type;
+package common.engine.type;
 
 /**
  * ...

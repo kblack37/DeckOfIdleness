@@ -5,7 +5,6 @@ import idle.engine.card.effects.ResourceEffect;
 import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
-import openfl.display.BlendMode;
 import openfl.display.Sprite;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
@@ -72,7 +71,7 @@ class CardDisplay extends Sprite {
 		
 		cardContainer.scaleX = cardContainer.scaleY = 2.0;
 		
-		var cardBitmapData : BitmapData = new BitmapData(Std.int(cardContainer.width), Std.int(cardContainer.height), true, 0x00FFFFFF);
+		var cardBitmapData : BitmapData = new BitmapData(120, 180, true, 0x00FFFFFF);
 		cardBitmapData.draw(cardContainer);
 		addChild(new Bitmap(cardBitmapData));
 	}
