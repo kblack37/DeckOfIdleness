@@ -6,7 +6,7 @@ import common.engine.IGameEngine;
 import common.engine.component.MoveComponent;
 import common.engine.component.RenderableComponent;
 import common.engine.component.TransformComponent;
-import common.math.MathUtil;
+import common.util.MathUtil;
 import openfl.display.DisplayObject;
 import openfl.geom.Point;
 

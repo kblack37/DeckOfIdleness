@@ -2,23 +2,18 @@ package idle.hand;
 
 import common.engine.IGameEngine;
 import common.engine.component.IComponentManager;
-import common.engine.component.MoveComponent;
 import common.engine.component.RenderableComponent;
 import common.engine.component.TransformComponent;
 import common.engine.widget.BaseWidget;
 import idle.engine.card.Card;
-import idle.engine.card.CardDisplay;
+import idle.card.CardDisplay;
 import idle.engine.card.ICardLibrary;
 import idle.engine.card.animation.SlideToEndAnimation;
-import openfl.Assets;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 import openfl.display.DisplayObject;
-import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.geom.Point;
-import openfl.text.TextField;
-import openfl.text.TextFormat;
 
 /**
  * ...
@@ -28,7 +23,7 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 	
 	private static inline var PADDING_SIDES : Float = 5.0;
 	
-	private var m_background : Bitmap;
+	private var m_background : DisplayObject;
 	
 	/**
 	 * To keep things straight in my head:
@@ -52,18 +47,6 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 		m_dirty = false;
 		
 		addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-	}
-	
-	private function onAddedToStage(e : Dynamic) {
-		removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-		addEventListener(Event.ENTER_FRAME, onEnterFrame);
-	}
-	
-	private function onEnterFrame(e : Dynamic) {
-		if (m_dirty) {
-			arrangeDisplays();
-			m_dirty = false;
-		}
 	}
 	
 	/* INTERFACE idle.engine.card.ICardLibrary */
@@ -130,6 +113,18 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 	}
 	
 	/* PRIVATE FUNCTIONS */
+	
+	private function onAddedToStage(e : Dynamic) {
+		removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		addEventListener(Event.ENTER_FRAME, onEnterFrame);
+	}
+	
+	private function onEnterFrame(e : Dynamic) {
+		if (m_dirty) {
+			arrangeDisplays();
+			m_dirty = false;
+		}
+	}
 	
 	private function addCard(cardDisplay : CardDisplay) {
 		addChild(cardDisplay);

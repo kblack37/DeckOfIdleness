@@ -7,21 +7,22 @@ import common.engine.systems.FreeTransformSystem;
 import common.state.BaseState;
 import common.state.IState;
 import haxe.Json;
-import haxe.Timer;
 import idle.deck.DeckWidget;
 import idle.discard.DiscardWidget;
 import idle.engine.GameEngine;
 import idle.engine.card.Card;
 import idle.engine.card.CardFactory;
 import idle.engine.resource.ResourceParser;
+import idle.hand.HandWidget;
+import idle.resource.ResourceDisplayWidget;
 import idle.systems.CardDrawSystem;
 import idle.systems.CardEffectSystem;
 import idle.systems.EmptyDeckDiscardPlaySystem;
 import idle.systems.FullHandPlaySystem;
-import idle.hand.HandWidget;
 import idle.systems.ResourceChangeSystem;
 import idle.systems.ShuffleDiscardToDeckSystem;
 import openfl.Assets;
+import openfl.events.MouseEvent;
 
 /**
  * ...
@@ -71,6 +72,11 @@ class DeckIdleGameState extends BaseState {
 		var discardWidget : DiscardWidget = new DiscardWidget(m_gameEngine, []);
 		m_gameEngine.addWidget("discard", discardWidget);
 		castedEngine.addCardLibrary("discard", discardWidget);
+		
+		// Initialize the resource display
+		var resourceDisplay : ResourceDisplayWidget = new ResourceDisplayWidget(m_gameEngine);
+		addChild(resourceDisplay);
+		m_gameEngine.addWidget("resourceDisplay", resourceDisplay);
 		
 		// Add some default systems
 		m_scriptRoot.addChild(new FreeTransformSystem(m_gameEngine));

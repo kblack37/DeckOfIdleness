@@ -7,6 +7,7 @@ import common.engine.component.RenderableComponent;
 import common.engine.component.RotateComponent;
 import common.engine.component.ScaleComponent;
 import common.engine.component.TransformComponent;
+import common.engine.type.EntityId;
 import common.engine.widget.BaseWidget;
 import common.state.StateMachine;
 import haxe.Json;
@@ -37,7 +38,7 @@ class GameEngine extends Sprite implements IGameEngine {
 	
 	private var m_componentManager : IComponentManager;
 	
-	private var m_tagToEntityIdsMap : Map<String, Array<String>>;
+	private var m_tagToEntityIdsMap : Map<String, Array<EntityId>>;
 
 	public function new() {
 		super();
@@ -109,7 +110,7 @@ class GameEngine extends Sprite implements IGameEngine {
 		m_stateMachine.getCurrentState().update();
 	}
 	
-	public function addUIComponent(entityId : String, display : DisplayObject) {
+	public function addUIComponent(entityId : EntityId, display : DisplayObject) {
 		// Add the new transform component and update its default values to those of the
 		// existing display object
 		var transformComponent : TransformComponent = 
@@ -123,22 +124,22 @@ class GameEngine extends Sprite implements IGameEngine {
 		renderableComponent.view = display;
 	}
 	
-	public function addWidget(entityId : String, widget : BaseWidget) {
+	public function addWidget(entityId : EntityId, widget : BaseWidget) {
 		var renderableComponent : RenderableComponent =
 			try cast(m_componentManager.addComponentToEntity(entityId, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;
 		
 		renderableComponent.view = widget;
 	}
 	
-	public function getWidget(entityId : String) : BaseWidget {
+	public function getWidget(entityId : EntityId) : BaseWidget {
 		var renderableComponent : RenderableComponent =
 			try cast(m_componentManager.getComponentByIdAndType(entityId, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;
 			
 		return try cast(renderableComponent.view, BaseWidget) catch (e : Dynamic) null;
 	}
 	
-	public function addTagToEntity(entityId : String, tag : String) {
-		var entityIds : Array<String> = m_tagToEntityIdsMap.get(tag);
+	public function addTagToEntity(entityId : EntityId, tag : String) {
+		var entityIds : Array<EntityId> = m_tagToEntityIdsMap.get(tag);
 		if (entityIds == null) {
 			entityIds = new Array<String>();
 			m_tagToEntityIdsMap.set(tag, entityIds);
@@ -146,8 +147,8 @@ class GameEngine extends Sprite implements IGameEngine {
 		entityIds.push(entityId);
 	}
 	
-	public function removeTagFromEntity(entityId : String, tag : String) {
-		var entityIds : Array<String> = m_tagToEntityIdsMap.get(tag);
+	public function removeTagFromEntity(entityId : EntityId, tag : String) {
+		var entityIds : Array<EntityId> = m_tagToEntityIdsMap.get(tag);
 		if (entityIds != null) {
 			entityIds.remove(entityId);
 		} else {
@@ -155,7 +156,7 @@ class GameEngine extends Sprite implements IGameEngine {
 		}
 	}
 	
-	public function getEntitiesWithTag(tag : String) {
-		return m_tagToEntityIdsMap.exists(tag) ? m_tagToEntityIdsMap.get(tag) : new Array<String>();
+	public function getEntitiesWithTag(tag : String) : Array<EntityId> {
+		return m_tagToEntityIdsMap.exists(tag) ? m_tagToEntityIdsMap.get(tag) : new Array<EntityId>();
 	}
 }

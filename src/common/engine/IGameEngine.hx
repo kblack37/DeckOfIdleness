@@ -1,6 +1,7 @@
 package common.engine;
 import common.display.ISprite;
 import common.engine.component.IComponentManager;
+import common.engine.type.EntityId;
 import common.engine.widget.BaseWidget;
 import common.state.IStateMachine;
 import openfl.display.DisplayObject;
@@ -19,14 +20,14 @@ interface IGameEngine extends ISprite {
 	 * Adds two components to the entity: a transform component and a renderable
 	 * component with the display given 
 	 */
-	public function addUIComponent(entityId : String, display : DisplayObject) : Void;
+	public function addUIComponent(entityId : EntityId, display : DisplayObject) : Void;
 	
-	public function addWidget(entityId : String, widget : BaseWidget) : Void;
-	public function getWidget(entityId : String) : BaseWidget;
+	public function addWidget(entityId : EntityId, widget : BaseWidget) : Void;
+	public function getWidget(entityId : EntityId) : BaseWidget;
 	
-	public function addTagToEntity(entityId : String, tag : String) : Void;
-	public function removeTagFromEntity(entityId : String, tag : String) : Void;
-	public function getEntitiesWithTag(tag : String) : Array<String>;
+	public function addTagToEntity(entityId : EntityId, tag : String) : Void;
+	public function removeTagFromEntity(entityId : EntityId, tag : String) : Void;
+	public function getEntitiesWithTag(tag : String) : Array<EntityId>;
 	
 	// The following functions are added to the interface in order to
 	// use it as a central event source

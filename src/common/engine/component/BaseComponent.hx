@@ -1,5 +1,6 @@
 package common.engine.component;
 import common.data.ISerializable;
+import common.engine.type.EntityId;
 
 /**
  * Base class for all components
@@ -8,10 +9,10 @@ import common.data.ISerializable;
  */
 class BaseComponent implements ISerializable {
 	
-	public var id(get, set) : String;
+	public var id(get, set) : EntityId;
 	public var typeId(get, never) : String;
 	
-	private var m_entityId : String;
+	private var m_entityId : EntityId;
 	private var m_typeId : String;
 
 	private function new(typeId : String) {
@@ -32,11 +33,11 @@ class BaseComponent implements ISerializable {
 		
 	}
 	
-	function get_id() : String {
+	function get_id() : EntityId {
 		return m_entityId;
 	}
 	
-	function set_id(val : String) : String {
+	function set_id(val : EntityId) : EntityId {
 		if (m_entityId == null) {
 			m_entityId = val;
 		}

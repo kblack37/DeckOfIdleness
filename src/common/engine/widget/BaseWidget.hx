@@ -1,14 +1,14 @@
 package common.engine.widget;
 
+import common.display.BaseSprite;
 import common.engine.IGameEngine;
-import openfl.display.Sprite;
 
 /**
  * The base class for almost all display elements; override the resize method
  * 
  * @author kristen autumn blackburn
  */
-class BaseWidget extends Sprite {
+class BaseWidget extends BaseSprite {
 
 	private var m_gameEngine : IGameEngine;
 	

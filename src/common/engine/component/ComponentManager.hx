@@ -1,5 +1,6 @@
 package common.engine.component;
 import common.engine.component.BaseComponent;
+import common.engine.type.EntityId;
 
 /**
  * ...
@@ -9,7 +10,7 @@ class ComponentManager implements IComponentManager {
 	
 	private var m_typeToComponentsMap : Map<String, Array<BaseComponent>>;
 	
-	private var m_typeToIdComponentMap : Map<String, Map<String, BaseComponent>>;
+	private var m_typeToIdComponentMap : Map<String, Map<EntityId, BaseComponent>>;
 	
 	private var m_typeToComponentPoolMap : Map<String, ComponentPool>;
 	
@@ -17,17 +18,17 @@ class ComponentManager implements IComponentManager {
 
 	public function new() {
 		m_typeToComponentsMap = new Map<String, Array<BaseComponent>>();
-		m_typeToIdComponentMap = new Map<String, Map<String, BaseComponent>>();
+		m_typeToIdComponentMap = new Map<String, Map<EntityId, BaseComponent>>();
 		m_typeToComponentPoolMap = new Map<String, ComponentPool>();
 		m_typeInitedMap = new Map<String, Bool>();
 	}
 	
-	public function addComponentToEntity(entityId : String, componentType : String) : BaseComponent {
+	public function addComponentToEntity(entityId : EntityId, componentType : String) : BaseComponent {
 		if (!m_typeInitedMap.exists(componentType)) {
 			initComponentType(componentType);
 		}
 		
-		var idToComponentMap : Map<String, BaseComponent> = m_typeToIdComponentMap.get(componentType);
+		var idToComponentMap : Map<EntityId, BaseComponent> = m_typeToIdComponentMap.get(componentType);
 		
 		// Get rid of the old component if it exists
 		if (idToComponentMap.exists(entityId)) {
@@ -48,11 +49,11 @@ class ComponentManager implements IComponentManager {
 		return component;
 	}
 	
-	public function removeComponentFromEntity(entityId : String, componentType : String) : Bool {
+	public function removeComponentFromEntity(entityId : EntityId, componentType : String) : Bool {
 		var success : Bool = false;
 		
 		if (m_typeInitedMap.exists(componentType)) {
-			var idToComponentMap : Map<String, BaseComponent> = m_typeToIdComponentMap.get(componentType);
+			var idToComponentMap : Map<EntityId, BaseComponent> = m_typeToIdComponentMap.get(componentType);
 			
 			if (idToComponentMap.exists(entityId)) {
 				var component : BaseComponent = idToComponentMap.get(entityId);
@@ -69,7 +70,7 @@ class ComponentManager implements IComponentManager {
 		return success;
 	}
 	
-	public function entityHasComponent(entityId : String, componentType : String) : Bool {
+	public function entityHasComponent(entityId : EntityId, componentType : String) : Bool {
 		if (!m_typeInitedMap.exists(componentType)) {
 			initComponentType(componentType);
 		}
@@ -77,7 +78,7 @@ class ComponentManager implements IComponentManager {
 		return m_typeToIdComponentMap.get(componentType).exists(entityId);
 	}
 	
-	public function getComponentByIdAndType(entityId : String, componentType : String) : BaseComponent {
+	public function getComponentByIdAndType(entityId : EntityId, componentType : String) : BaseComponent {
 		if (!m_typeInitedMap.exists(componentType)) {
 			initComponentType(componentType);
 		}
@@ -95,13 +96,13 @@ class ComponentManager implements IComponentManager {
 	
 	public function clear() {
 		m_typeToComponentsMap = new Map<String, Array<BaseComponent>>();
-		m_typeToIdComponentMap = new Map<String, Map<String, BaseComponent>>();
+		m_typeToIdComponentMap = new Map<String, Map<EntityId, BaseComponent>>();
 		m_typeInitedMap = new Map<String, Bool>();
 	}
 	
 	private function initComponentType(componentType : String) {
 		m_typeToComponentsMap.set(componentType, new Array<BaseComponent>());
-		m_typeToIdComponentMap.set(componentType, new Map<String, BaseComponent>());
+		m_typeToIdComponentMap.set(componentType, new Map<EntityId, BaseComponent>());
 		m_typeToComponentPoolMap.set(componentType, new ComponentPool(componentType));
 		m_typeInitedMap.set(componentType, true);
 	}

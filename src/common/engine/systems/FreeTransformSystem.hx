@@ -9,7 +9,8 @@ import common.engine.component.RotateComponent;
 import common.engine.component.ScaleComponent;
 import common.engine.component.TransformComponent;
 import common.engine.scripting.ScriptStatus;
-import common.math.MathUtil;
+import common.engine.type.EntityId;
+import common.util.MathUtil;
 import motion.Actuate;
 
 /**
@@ -30,7 +31,7 @@ class FreeTransformSystem extends BaseSystem {
 		var baseComponents : Array<BaseComponent> = componentManager.getComponentsOfType(TransformComponent.TYPE_ID);
 		for (baseComponent in baseComponents) {
 			var transformComponent : TransformComponent = try cast(baseComponent, TransformComponent) catch (e : Dynamic) null;
-			var entityId : String = transformComponent.id;
+			var entityId : EntityId = transformComponent.id;
 			
 			if (componentManager.entityHasComponent(entityId, RenderableComponent.TYPE_ID)) {
 				var renderableComponent : RenderableComponent = try cast(componentManager.getComponentByIdAndType(entityId, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;

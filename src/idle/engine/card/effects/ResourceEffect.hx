@@ -4,7 +4,7 @@ import common.engine.IGameEngine;
 import common.engine.scripting.ScriptStatus;
 import idle.engine.component.AmountComponent;
 import idle.engine.events.ResourceEvent;
-import idle.engine.type.Number;
+import common.engine.type.Number;
 
 /**
  * ...
