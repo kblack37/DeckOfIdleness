@@ -26,4 +26,11 @@ class ResourceEvent extends BaseEvent {
 	 * }
 	 */
 	public static inline var RESOURCE_LOST : String = "resource_lost";
+	
+	/**
+	 * Dispatched when a resource is changed
+	 * data:
+	 * 	the resource name
+	 */
+	public static inline var RESOURCE_CHANGED : String = "resource_changed";
 }

@@ -18,7 +18,7 @@ class FullHandPlaySystem extends BaseSystem {
 	private var m_discard : ICardLibrary;
 	
 	// A magic number for now
-	private var m_maxHandSize : Int = 5;
+	private var m_maxHandSize : Int = 12;
 	
 	public function new(gameEngine : IGameEngine, id : String = null, isActive : Bool = true) {
 		super(gameEngine, id, isActive);

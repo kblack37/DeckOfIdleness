@@ -23,6 +23,7 @@ class ResourceChangeSystem extends BaseSystem {
 			try cast(m_gameEngine.getComponentManager().getComponentByIdAndType(e.data.resource, AmountComponent.TYPE_ID), AmountComponent) catch (e : Dynamic) null;
 		
 		amountComponent.amount += e.data.amount;
+		m_gameEngine.dispatchEvent(new ResourceEvent(ResourceEvent.RESOURCE_CHANGED, e.data.resource));
 	}
 	
 	private function onResourceLost(e : ResourceEvent) {
@@ -30,5 +31,6 @@ class ResourceChangeSystem extends BaseSystem {
 			try cast(m_gameEngine.getComponentManager().getComponentByIdAndType(e.data.resource, AmountComponent.TYPE_ID), AmountComponent) catch (e : Dynamic) null;
 		
 		amountComponent.amount -= e.data.amount;
+		m_gameEngine.dispatchEvent(new ResourceEvent(ResourceEvent.RESOURCE_CHANGED, e.data.resource));
 	}
 }

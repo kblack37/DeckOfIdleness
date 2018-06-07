@@ -50,8 +50,8 @@ class DeckIdleGameState extends BaseState {
 		// some testing parameters
 		var card_factory : CardFactory = new CardFactory(m_gameEngine);
 		var test_deck : Array<Card> = new Array<Card>();
-		for (i in 0...7) {
-			test_deck.push(card_factory.createCard(Std.random(9)));
+		for (i in 0...18) {
+			test_deck.push(card_factory.createCard(i % 9));
 		}
 		
 		// Initialize the deck widget
