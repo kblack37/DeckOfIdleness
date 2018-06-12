@@ -28,6 +28,7 @@ class ScriptNode {
 	public function addChild(child : ScriptNode, index : Int = -1) {
 		m_children.insert(index, child);
 		child.m_parent = this;
+		child.onAdded();
 	}
 	
 	public function removeChild(childToRemove : ScriptNode) {
@@ -92,6 +93,10 @@ class ScriptNode {
 		this.setIsActive(false);
 		
 		m_parent = null;
+	}
+	
+	private function onAdded() {
+		
 	}
 	
 	function get_id() : String {

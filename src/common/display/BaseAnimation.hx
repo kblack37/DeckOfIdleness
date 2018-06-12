@@ -10,7 +10,7 @@ import common.engine.IGameEngine;
 class BaseAnimation implements IAnimation {
 	
 	private var m_gameEngine : IGameEngine;
-
+	
 	public function new(gameEngine : IGameEngine) {
 		m_gameEngine = gameEngine;
 	}
@@ -26,4 +26,7 @@ class BaseAnimation implements IAnimation {
 		
 	}
 	
+	public function isPlaying() : Bool {
+		return false;
+	}
 }

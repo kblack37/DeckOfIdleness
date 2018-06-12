@@ -2,6 +2,7 @@ package idle.systems;
 
 import common.engine.IGameEngine;
 import common.engine.systems.BaseSystem;
+import common.engine.type.Number;
 import idle.engine.component.AmountComponent;
 import idle.engine.events.ResourceEvent;
 
@@ -30,7 +31,7 @@ class ResourceChangeSystem extends BaseSystem {
 		var amountComponent : AmountComponent =
 			try cast(m_gameEngine.getComponentManager().getComponentByIdAndType(e.data.resource, AmountComponent.TYPE_ID), AmountComponent) catch (e : Dynamic) null;
 		
-		amountComponent.amount -= e.data.amount;
+		amountComponent.amount += -1 * e.data.amount;
 		m_gameEngine.dispatchEvent(new ResourceEvent(ResourceEvent.RESOURCE_CHANGED, e.data.resource));
 	}
 }

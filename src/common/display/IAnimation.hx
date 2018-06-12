@@ -8,4 +8,5 @@ package common.display;
 interface IAnimation {
 	public function start() : Void;
 	public function stop() : Void;
+	public function isPlaying() : Bool;
 }

@@ -19,6 +19,11 @@ abstract Number(Float) from Float to Float {
 		return Math.round(this);
 	}
 	
+	@:op(A * B)
+	public function times(rhs : Float) : Number {
+		return this * rhs;
+	}
+	
 	@:op(A > B)
 	public function gr(rhs : Float) : Bool {
 		return this > rhs;

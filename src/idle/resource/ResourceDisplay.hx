@@ -2,8 +2,8 @@ package idle.resource;
 
 import common.engine.IGameEngine;
 import common.engine.type.EntityId;
+import openfl.Assets;
 import openfl.display.Bitmap;
-import openfl.display.BitmapData;
 import openfl.display.Sprite;
 import openfl.filters.BlurFilter;
 import openfl.filters.DropShadowFilter;
@@ -27,7 +27,7 @@ class ResourceDisplay extends Sprite {
 		var padding : Float = 5;
 		
 		var resourceName : String = cast(resourceId, String);
-		var resourceIcon : Bitmap = new Bitmap(new BitmapData(38, 22, true, 0xFF000000));
+		var resourceIcon : Bitmap = new Bitmap(Assets.getBitmapData("assets/img/" + resourceName + "_icon.png"));
 		resourceIcon.scaleX = resourceIcon.scaleY = 1.50;
 		
 		var resourceText : TextField = new TextField();

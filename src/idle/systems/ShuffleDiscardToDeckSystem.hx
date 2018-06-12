@@ -31,7 +31,6 @@ class ShuffleDiscardToDeckSystem extends BaseSystem {
 	}
 	
 	private function onDeckEmpty(e : Dynamic) {
-		trace("shuffling discard into deck");
 		while (m_discard.size() > 0) {
 			m_deck.addCardToTop(m_discard.removeCardFromTop());
 		}

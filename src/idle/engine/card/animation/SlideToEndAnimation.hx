@@ -6,7 +6,9 @@ import common.engine.IGameEngine;
 import common.engine.component.MoveComponent;
 import common.engine.component.RenderableComponent;
 import common.engine.component.TransformComponent;
+import common.engine.type.EntityId;
 import common.util.MathUtil;
+import motion.Actuate;
 import openfl.display.DisplayObject;
 import openfl.geom.Point;
 
@@ -18,11 +20,13 @@ class SlideToEndAnimation extends BaseAnimation {
 	
 	private static inline var MIN_VELOCITY : Float = 100;
 	
-	private var m_entityId : String;
+	private var m_entityId : EntityId;
 	private var m_endPoint : Point;
 	private var m_durationMs : Int;
+	
+	private var m_isPlaying : Bool;
 
-	public function new(gameEngine : IGameEngine, entityId : String, endPoint : Point, durationMs : Int) {
+	public function new(gameEngine : IGameEngine, entityId : EntityId, endPoint : Point, durationMs : Int) {
 		super(gameEngine);
 		
 		m_entityId = entityId;
@@ -40,6 +44,12 @@ class SlideToEndAnimation extends BaseAnimation {
 			velocity = Math.max(velocity, MIN_VELOCITY);
 			moveComponent.queueMove({x: m_endPoint.x, y: m_endPoint.y, velocity: velocity});
 		}
+		
+		m_isPlaying = true;
+		Actuate.timer(m_durationMs / 1000.0).onComplete(function() {m_isPlaying = false; });
 	}
 	
+	override public function isPlaying() : Bool {
+		return m_isPlaying;
+	}
 }

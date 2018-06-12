@@ -6,7 +6,6 @@ import common.engine.component.RenderableComponent;
 import common.engine.component.TransformComponent;
 import common.engine.widget.BaseWidget;
 import idle.engine.card.Card;
-import idle.card.CardDisplay;
 import idle.engine.card.ICardLibrary;
 import idle.engine.card.animation.SlideToEndAnimation;
 import openfl.display.Bitmap;
@@ -32,7 +31,7 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 	 * left of the widget; noting this because the direction of the 
 	 * queue growth is counter that of the hand growth
 	 */
-	private var m_cardDisplays : Array<CardDisplay>;
+	private var m_cards : Array<Card>;
 	
 	private var m_dirty : Bool;
 	
@@ -42,7 +41,7 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 		m_background = new Bitmap(new BitmapData(800, 200, false, 0x666666));
 		addChild(m_background);
 		
-		m_cardDisplays = new Array<CardDisplay>();
+		m_cards = new Array<Card>();
 		
 		m_dirty = false;
 		
@@ -51,61 +50,58 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 	
 	/* INTERFACE idle.engine.card.ICardLibrary */
 	
+	public function getCards() : Array<Card> {
+		return m_cards.copy();
+	}
+	
 	public function addCardAt(card : Card, index : Int) {
-		var cardDisplay : CardDisplay = createCardDisplay(card);
-		m_cardDisplays.insert(index, cardDisplay);
-		addCard(cardDisplay);
+		m_cards.insert(index, card);
+		addCard(card);
 	}
 	
 	public function addCardToTop(card : Card) {
-		var cardDisplay : CardDisplay = createCardDisplay(card);
-		m_cardDisplays.unshift(cardDisplay);
-		addCard(cardDisplay);
+		m_cards.unshift(card);
+		addCard(card);
 	}
 	
 	public function addCardToBottom(card : Card) {
-		var cardDisplay : CardDisplay = createCardDisplay(card);
-		m_cardDisplays.push(cardDisplay);
-		addCard(cardDisplay);
+		m_cards.push(card);
+		addCard(card);
 	}
 	
 	public function addCardAtRandom(card : Card) {
-		addCardAt(card, Std.random(m_cardDisplays.length + 1));
+		addCardAt(card, Std.random(m_cards.length + 1));
 	}
 	
 	public function removeCard(card : Card) {
-		var cardDisplay : CardDisplay = Lambda.find(m_cardDisplays, 
-			function(disp : CardDisplay) : Bool {
-				return disp.cardData.uid == card.uid;
-			});
-		_removeCard(cardDisplay);
+		_removeCard(card);
 	}
 	
 	public function removeCardAt(index : Int) : Card {
-		var cardDisplay : CardDisplay = m_cardDisplays[index];
-		m_cardDisplays.remove(cardDisplay);
-		_removeCard(cardDisplay);
-		return cardDisplay.cardData;
+		var card : Card = m_cards[index];
+		m_cards.remove(card);
+		_removeCard(card);
+		return card;
 	}
 	
 	public function removeCardFromTop() : Card {
-		var cardDisplay : CardDisplay = m_cardDisplays.shift();
-		_removeCard(cardDisplay);
-		return cardDisplay.cardData;
+		var card : Card = m_cards.shift();
+		_removeCard(card);
+		return card;
 	}
 	
 	public function removeCardFromBottom() : Card {
-		var cardDisplay : CardDisplay = m_cardDisplays.pop();
-		_removeCard(cardDisplay);
-		return cardDisplay.cardData;
+		var card : Card = m_cards.pop();
+		_removeCard(card);
+		return card;
 	}
 	
 	public function removeCardAtRandom() : Card {
-		return removeCardAt(Std.random(m_cardDisplays.length));
+		return removeCardAt(Std.random(m_cards.length));
 	}
 	
 	public function size() : Int {
-		return m_cardDisplays.length;
+		return m_cards.length;
 	}
 	
 	public function shuffle() {
@@ -126,26 +122,38 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 		}
 	}
 	
-	private function addCard(cardDisplay : CardDisplay) {
-		addChild(cardDisplay);
-		m_gameEngine.addUIComponent(cardDisplay.cardData.uid, cardDisplay);
+	private function addCard(card : Card) {
+		var renderableComponent : RenderableComponent =
+			try cast(m_gameEngine.getComponentManager().getComponentByIdAndType(card, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;
+		addChild(renderableComponent.view);
+		
+		// For now show them coming from somewhere off to the left
+		var transformComponent : TransformComponent =
+			try cast(m_gameEngine.getComponentManager().getComponentByIdAndType(card, TransformComponent.TYPE_ID), TransformComponent) catch (e : Dynamic) null;
+		transformComponent.move.queueMove({x: -20, y: (m_background.height - renderableComponent.view.height) * 0.5, velocity: -1});
+		
+		// Set it to rearrange the displays
 		m_dirty = true;
 	}
 	
-	private function _removeCard(cardDisplay : CardDisplay) {
-		removeChild(cardDisplay);
-		var componentManager : IComponentManager = m_gameEngine.getComponentManager();
-		componentManager.removeComponentFromEntity(cardDisplay.cardData.uid, RenderableComponent.TYPE_ID);
-		componentManager.removeComponentFromEntity(cardDisplay.cardData.uid, TransformComponent.TYPE_ID);
+	private function _removeCard(card : Card) {
+		var renderableComponent : RenderableComponent =
+			try cast(m_gameEngine.getComponentManager().getComponentByIdAndType(card, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;
+		removeChild(renderableComponent.view);
+		
+		// Set it to rearrange the displays
 		m_dirty = true;
 	}
 	
 	private function arrangeDisplays() {
 		var xOffset : Float = PADDING_SIDES;
 		var overlap : Float = calculateNeededOverlap();
-		for (cardDisplay in m_cardDisplays) {
+		var componentManager : IComponentManager = m_gameEngine.getComponentManager();
+		for (cardId in m_cards) {
+			var renderableComponent : RenderableComponent = try cast(componentManager.getComponentByIdAndType(cardId, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;
+			var cardDisplay = renderableComponent.view;
 			var endPoint : Point = new Point(m_background.width - cardDisplay.width - xOffset, (m_background.height - cardDisplay.height) * 0.5);
-			var slideToEndAnimation : SlideToEndAnimation = new SlideToEndAnimation(m_gameEngine, cardDisplay.cardData.uid, endPoint, 500);
+			var slideToEndAnimation : SlideToEndAnimation = new SlideToEndAnimation(m_gameEngine, cardId, endPoint, 500);
 			slideToEndAnimation.start();
 			xOffset += cardDisplay.width;
 			if (overlap > 0) {
@@ -156,29 +164,22 @@ class HandWidget extends BaseWidget implements ICardLibrary {
 		}
 	}
 	
-	private function createCardDisplay(card : Card) : CardDisplay {
-		var cardDisplay : CardDisplay = new CardDisplay(card);
-		
-		// For now show them coming from somewhere off to the left
-		cardDisplay.x = -20;
-		cardDisplay.y = (m_background.height - cardDisplay.height) * 0.5;
-		return cardDisplay;
-	}
-	
 	// In some cases, the hand may grow too big and the cards may have
 	// to overlap each other; this is calculating how much overlap is needed
 	// for them to fit within the hand space still
 	private function calculateNeededOverlap() : Float {
 		var overlap : Float = 0;
 		var totalDisplayWidth : Float = 0;
-		for (cardDisplay in m_cardDisplays) {
-			totalDisplayWidth += cardDisplay.width;
+		var componentManager : IComponentManager = m_gameEngine.getComponentManager();
+		for (cardId in m_cards) {
+			var renderableComponent : RenderableComponent = try cast(componentManager.getComponentByIdAndType(cardId, RenderableComponent.TYPE_ID), RenderableComponent) catch (e : Dynamic) null;
+			totalDisplayWidth += renderableComponent.view.width;
 		}
 		
 		var widthToFitIn : Float = m_background.width - 2 * PADDING_SIDES;
 		if (totalDisplayWidth > widthToFitIn) {
 			var widthDiff : Float = totalDisplayWidth - widthToFitIn;
-			overlap = widthDiff / (m_cardDisplays.length - 1);
+			overlap = widthDiff / (m_cards.length - 1);
 		}
 		
 		return overlap;

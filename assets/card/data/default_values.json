@@ -3,108 +3,231 @@
 		"id": 0,
 		"name": "Relax",
 		"color": "grey",
+		"r": "c",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "energy",
 				"a": 3
-			}]
+			}],
+		"upgrade": 
+			{
+				"cost": 
+					{
+						"energy": 5
+					},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "energy",
+						"a": 2
+					}]
+			}
 	},
 	{
 		"id": 1,
 		"name": "Lift",
 		"color": "red",
+		"r": "c",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "energy",
 				"a": 3
-			}]
+			}],
+		"upgrade":
+			{
+				"cost":
+					{
+						"energy": 5
+					},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "energy",
+						"a": 2
+					}]
+			}
 	},
 	{
 		"id": 2,
 		"name": "Barter",
 		"color": "yellow",
+		"r": "c",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "energy",
 				"a": 3
-			}]
+			}],
+		"upgrade":
+			{
+				"cost": {
+					"energy": 5
+				},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "energy",
+						"a": 2
+					}]
+			}
 	},
 	{
 		"id": 3,
 		"name": "Read",
 		"color": "blue",
+		"r": "c",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "energy",
 				"a": 3
-			}]
+			}],
+		"upgrade":
+			{
+				"cost": {
+					"energy": 5
+				},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "energy",
+						"a": 2
+					}]
+			}
 	},
 	{
 		"id": 4,
 		"name": "Adapt",
 		"color": "green",
+		"r": "c",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "energy",
 				"a": 3
-			}]
+			}],
+		"upgrade":
+			{
+				"cost": {
+					"energy": 5
+				},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "energy",
+						"a": 2
+					}]
+			}
 	},
 	{
 		"id": 5,
 		"name": "Lead",
 		"color": "red",
+		"r": "uc",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "power",
 				"a": 1
-			}]
+			}],
+		"upgrade": 
+			{
+				"cost": {
+					"energy": 6,
+					"power": 1
+				},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "power",
+						"a": 1
+					}]
+			}
 	},
 	{
 		"id": 6,
 		"name": "Sell",
 		"color": "yellow",
+		"r": "uc",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "coins",
 				"a": 1
-			}]
+			}],
+		"upgrade": 
+			{
+				"cost": {
+					"energy": 6,
+					"coins": 1
+				},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "coins",
+						"a": 1
+					}]
+			}
 	},
 	{
 		"id": 7,
 		"name": "Study",
 		"color": "blue",
+		"r": "uc",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "secrets",
 				"a": 1
-			}]
+			}],
+		"upgrade": 
+			{
+				"cost": {
+					"energy": 6,
+					"secrets": 1
+				},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "secrets",
+						"a": 1
+					}]
+			}
 	},
 	{
 		"id": 8,
 		"name": "Mutate",
 		"color": "green",
+		"r": "uc",
 		"img": "assets/img/ph.png",
 		"effects":
 			[{
 				"type": "resource",
 				"r": "genes",
 				"a": 1
-			}]
+			}],
+		"upgrade": 
+			{
+				"cost": {
+					"energy": 6,
+					"genes": 1
+				},
+				"effects":
+					[{
+						"type": "resource",
+						"r": "genes",
+						"a": 1
+					}]
+			}
 	}]
 }

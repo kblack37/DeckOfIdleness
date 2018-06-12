@@ -4,6 +4,7 @@ import common.engine.IGameEngine;
 import common.engine.scripting.selectors.AllSelector;
 import common.engine.scripting.selectors.TimerSelector;
 import common.engine.systems.FreeTransformSystem;
+import common.engine.systems.HighlightSystem;
 import common.state.BaseState;
 import common.state.IState;
 import haxe.Json;
@@ -15,8 +16,11 @@ import idle.engine.card.CardFactory;
 import idle.engine.resource.ResourceParser;
 import idle.hand.HandWidget;
 import idle.resource.ResourceDisplayWidget;
+import idle.systems.CardClickUpgradeSystem;
+import idle.systems.CardDisplaySystem;
 import idle.systems.CardDrawSystem;
 import idle.systems.CardEffectSystem;
+import idle.systems.CardUpgradeSystem;
 import idle.systems.EmptyDeckDiscardPlaySystem;
 import idle.systems.FullHandPlaySystem;
 import idle.systems.ResourceChangeSystem;
@@ -48,6 +52,11 @@ class DeckIdleGameState extends BaseState {
 		
 		var castedEngine : GameEngine = try cast(m_gameEngine, GameEngine) catch (e : Dynamic) null;
 		
+		// First off, add some default systems
+		m_scriptRoot.addChild(new FreeTransformSystem(m_gameEngine));
+		m_scriptRoot.addChild(new HighlightSystem(m_gameEngine));
+		m_scriptRoot.addChild(new CardDisplaySystem(m_gameEngine, "cardDisplaySystem"));
+		
 		// some testing parameters
 		var card_factory : CardFactory = new CardFactory(m_gameEngine);
 		var test_deck : Array<Card> = new Array<Card>();
@@ -59,6 +68,7 @@ class DeckIdleGameState extends BaseState {
 		var deckWidget : DeckWidget = new DeckWidget(m_gameEngine, test_deck);
 		m_gameEngine.addWidget("deck", deckWidget);
 		castedEngine.addCardLibrary("deck", deckWidget);
+		deckWidget.shuffle();
 		
 		// Initialize the hand widget
 		var handWidget : HandWidget = new HandWidget(m_gameEngine);
@@ -78,11 +88,19 @@ class DeckIdleGameState extends BaseState {
 		addChild(resourceDisplay);
 		m_gameEngine.addWidget("resourceDisplay", resourceDisplay);
 		
-		// Add some default systems
-		m_scriptRoot.addChild(new FreeTransformSystem(m_gameEngine));
+		// Add the resource systems
+		var resourceSystems : AllSelector = new AllSelector("resourceSystems");
+		resourceSystems.addChild(new ResourceChangeSystem(m_gameEngine, "resourceChangeSystem"));
+		m_scriptRoot.addChild(resourceSystems);
+		
+		// Add the upgrade systems
+		var upgradeSystems : AllSelector = new AllSelector("upgradeSystems");
+		upgradeSystems.addChild(new CardClickUpgradeSystem(m_gameEngine, "cardClickUpgradeSystem"));
+		upgradeSystems.addChild(new CardUpgradeSystem(m_gameEngine, "cardUpgradeSystem"));
+		m_scriptRoot.addChild(upgradeSystems);
 		
 		// Add the card drawing systems
-		var cardDrawTimer : TimerSelector = new TimerSelector(m_gameEngine.getTime(), 750, "cardDrawTimer");
+		var cardDrawTimer : TimerSelector = new TimerSelector(m_gameEngine.getTime(), 1500, "cardDrawTimer");
 		cardDrawTimer.addChild(new CardDrawSystem(m_gameEngine, "cardDrawSystem"));
 		m_scriptRoot.addChild(cardDrawTimer);
 		
@@ -97,10 +115,5 @@ class DeckIdleGameState extends BaseState {
 		cardPlaySystems.addChild(new EmptyDeckDiscardPlaySystem(m_gameEngine, "emptyDeckDiscardPlaySystem"));
 		cardPlaySystems.addChild(new CardEffectSystem(m_gameEngine, "cardEffectSystem"));
 		m_scriptRoot.addChild(cardPlaySystems);
-		
-		// Add the resource systems
-		var resourceSystems : AllSelector = new AllSelector("resourceSystems");
-		resourceSystems.addChild(new ResourceChangeSystem(m_gameEngine, "resourceChangeSystem"));
-		m_scriptRoot.addChild(resourceSystems);
 	}
 }

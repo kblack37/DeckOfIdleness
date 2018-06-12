@@ -21,6 +21,10 @@ class BaseLibraryWidget extends BaseWidget implements ICardLibrary {
 	
 	
 	/* INTERFACE idle.engine.card.ICardLibrary */
+	
+	public function getCards() : Array<Card> {
+		return m_cards.copy();
+	}
 
 	public function addCardAt(card : Card, index : Int) : Void {
 		m_cards.insert(index, card);

@@ -11,7 +11,7 @@ class AmountComponent extends BaseComponent {
 	
 	public static var TYPE_ID : String = Type.getClassName(AmountComponent);
 	
-	public var amount(get, set) : Float;
+	public var amount(get, set) : Number;
 	
 	private var m_amount : Number;
 
@@ -20,6 +20,8 @@ class AmountComponent extends BaseComponent {
 	}
 	
 	override public function initialize() {
+		super.initialize();
+		
 		m_amount = new Number(0);
 	}
 	
@@ -33,11 +35,11 @@ class AmountComponent extends BaseComponent {
 		}
 	}
 	
-	function get_amount() : Float {
+	function get_amount() : Number {
 		return m_amount;
 	}
 	
-	function set_amount(value : Float) : Float {
+	function set_amount(value : Number) : Number {
 		return m_amount = value;
 	}
 }

@@ -22,6 +22,8 @@ class TestMain extends Sprite {
 	}
 	
 	private function onAddedToStage(e : Dynamic) {
+		stage.showDefaultContextMenu = false;
+		
 		m_gameEngine = new GameEngine();
 		addChild(m_gameEngine.getSprite());
 		addEventListener(Event.ENTER_FRAME, onEnterFrame);

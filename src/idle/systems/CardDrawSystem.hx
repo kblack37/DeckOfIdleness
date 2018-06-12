@@ -32,8 +32,8 @@ class CardDrawSystem extends BaseSystem {
 		if (m_deck.size() > 0) {
 			drawCard();
 		} else {
-			m_gameEngine.dispatchEvent(new DeckEvent(DeckEvent.DECK_EMPTY));
 			m_gameEngine.addEventListener(DeckEvent.DECK_REFILLED, onDeckRefilled);
+			m_gameEngine.dispatchEvent(new DeckEvent(DeckEvent.DECK_EMPTY));
 			status = ScriptStatus.FAIL;
 		}
 		

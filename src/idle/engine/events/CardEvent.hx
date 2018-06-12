@@ -8,14 +8,25 @@ import common.engine.BaseEvent;
  */
 class CardEvent extends BaseEvent {
 	/**
-	 * Event that is dispatched when a card is drawn
-	 * data: the card that was drawn
+	 * Event that is dispatched when a unique card is created for the first time
+	 * data: entityId
 	 */
-	public static inline var CARD_DRAWN = "card_drawn";
+	public static inline var CARD_CREATED : String = "card_created";
+	/**
+	 * Event that is dispatched when a card is drawn
+	 * data: entityId
+	 */
+	public static inline var CARD_DRAWN : String = "card_drawn";
 	
 	/**
 	 * Event that is dispatched when a card is played
-	 * data: the card that was played
+	 * data: entityId
 	 */
-	public static inline var CARD_PLAYED = "card_played";
+	public static inline var CARD_PLAYED : String = "card_played";
+	
+	/**
+	 * Event that is dispatched when a card is upgraded
+	 * data: entityId
+	 */
+	public static inline var CARD_UPGRADED : String = "card_upgraded";
 }

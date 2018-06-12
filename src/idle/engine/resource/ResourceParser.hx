@@ -23,7 +23,11 @@ class ResourceParser {
 			for (resource in resources) {
 				var resourceName : String = resource.name;
 				
-				componentManager.addComponentToEntity(resourceName, AmountComponent.TYPE_ID).deserialize(resource);
+				var amountComponent : AmountComponent = try cast(componentManager.addComponentToEntity(resourceName, AmountComponent.TYPE_ID), AmountComponent) catch (e : Dynamic) null;
+				amountComponent.deserialize(resource);
+				#if debug
+					amountComponent.amount = 5000;
+				#end
 				m_gameEngine.addTagToEntity(resourceName, "resource");
 			}
 		} else {

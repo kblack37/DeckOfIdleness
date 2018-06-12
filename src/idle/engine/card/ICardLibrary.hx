@@ -4,6 +4,8 @@ package idle.engine.card;
  * @author kristen autumn blackburn
  */
 interface ICardLibrary {
+	public function getCards() : Array<Card>;
+	
 	public function addCardAt(card : Card, index : Int) : Void;
 	
 	/**

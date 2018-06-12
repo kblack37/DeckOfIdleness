@@ -3,7 +3,10 @@ package idle.systems;
 import common.engine.IGameEngine;
 import common.engine.scripting.ScriptStatus;
 import common.engine.systems.BaseSystem;
+import common.engine.type.EntityId;
 import idle.engine.card.Card;
+import idle.engine.card.effects.ResourceEffect;
+import idle.engine.component.EffectsComponent;
 import idle.engine.events.CardEvent;
 
 /**
@@ -31,10 +34,17 @@ class CardEffectSystem extends BaseSystem {
 	}
 	
 	private function onCardPlayed(event : CardEvent) {
-		var playedCard : Card = try cast(event.data, Card) catch (e : Dynamic) null;
+		var playedCardId : EntityId = event.data;
 		
-		for (cardEffect in playedCard.getCardEffects()) {
-			addChild(cardEffect);
+		var effectsComponent : EffectsComponent = 
+			try cast(m_gameEngine.getComponentManager().getComponentByIdAndType(playedCardId, EffectsComponent.TYPE_ID), EffectsComponent) catch (e : Dynamic) null;
+		for (effectData in effectsComponent.effects) {
+			this.addChild(
+				switch(Reflect.field(effectData, "type")) {
+					case "resource": new ResourceEffect(m_gameEngine, Reflect.field(effectData, "r"), Reflect.field(effectData, "a"));
+					case _: throw "Undefined effect";
+				}
+			);
 		}
 	}
 	
